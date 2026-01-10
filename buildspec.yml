@@ -11,22 +11,21 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION |
-        docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
 
   build:
     commands:
       - echo Build started on `date`
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG
-        $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
 
- post_build:
-  commands:
-    - echo Pushing Docker image to ECR
-    - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-    - echo Updating kubeconfig for EKS
-    - aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name brain-cluster
-    - echo Deploying to EKS
-    - kubectl apply --validate=false -f $CODEBUILD_SRC_DIR/deployment.yaml
-    - kubectl apply --validate=false -f $CODEBUILD_SRC_DIR/service.yaml
+  post_build:
+    commands:
+      - echo Pushing Docker image to ECR
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo Updating kubeconfig for EKS
+      - aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name brain-cluster
+      - echo Deploying to EKS
+      - kubectl apply --validate=false -f $CODEBUILD_SRC_DIR/deployment.yaml
+      - kubectl apply --validate=false -f $CODEBUILD_SRC_DIR/service.yaml
+
