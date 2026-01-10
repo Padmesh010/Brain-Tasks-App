@@ -25,6 +25,8 @@ phases:
     commands:
       - echo Pushing Docker image to ECR
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo Updating kubeconfig for EKS
+      - aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name brain-cluster
       - echo Deploying to EKS
       - kubectl apply -f deployment.yaml
       - kubectl apply -f service.yaml
