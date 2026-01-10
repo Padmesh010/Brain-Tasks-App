@@ -1,4 +1,4 @@
->> Brain Tasks App – DevOps Deployment Project
+>> Brain Tasks App – DevOps Deployment Project >>
 
 ## Project Overview ##
 This project demonstrates end-to-end DevOps deployment of a React application using Docker, AWS ECR, Amazon EKS, and AWS CI/CD services.
@@ -14,7 +14,7 @@ This project demonstrates end-to-end DevOps deployment of a React application us
 - Deploy: Amazon EKS via kubectl
 - Orchestration: AWS CodePipeline
 
->> Note: AWS CodeDeploy is not used as it is not available in the AWS free tier. Deployment is handled using CodePipeline and CodeBuild.
+>> Note: AWS CodeDeploy is not used as it is not available in the AWS free tier. Deployment is handled using CodePipeline and CodeBuild. >>
 
 ## Deployment Documentation ##
 Detailed deployment documentation, including setup steps, CI/CD pipeline configuration, and screenshots, is available in the **`docs/`** folder of this repository.
