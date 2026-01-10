@@ -28,6 +28,6 @@ phases:
       - echo Updating kubeconfig for EKS
       - aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name brain-cluster
       - echo Deploying to EKS
-      - kubectl apply -f deployment.yaml
-      - kubectl apply -f service.yaml
+      - kubectl apply -f ./deployment.yaml
+      - kubectl apply -f ./service.yaml
 
